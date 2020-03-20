@@ -1,0 +1,1 @@
+{"version":3,"file":"Company.js","sourceRoot":"","sources":["../../src/entity/Company.ts"],"names":[],"mappings":";;;;;;;;;;;AACA,qCAA+D;AAG/D,IAAa,OAAO,GAApB,MAAa,OAAO;CAanB,CAAA;AAVG;IADC,gCAAsB,EAAE;;mCACd;AAKX;IAHC,gBAAM,CAAC;QACJ,MAAM,EAAE,GAAG;KACd,CAAC;;qCACW;AAGb;IADC,gBAAM,EAAE;;sCACI;AAXJ,OAAO;IADnB,gBAAM,EAAE;GACI,OAAO,CAanB;AAbY,0BAAO"}

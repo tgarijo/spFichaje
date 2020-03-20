@@ -1,0 +1,11 @@
+CREATE DATABASE node_spfichaje_ts;
+
+CREATE TABLE company(
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    image_url TEXT,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
+
+DESCRIBE company;
