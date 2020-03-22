@@ -7,7 +7,8 @@ npm i morgan ##midleware para ver cosas
 npm i @types/morgan -D
 npm i mysql2
 npm i types/mysql2 -D
-npm install sequelize
+npm install -s helmet cors jsonwebtoken bcryptjs class-validator ts-node-dev
+
 npm install @types/node -D
 npm install @types/validator -D
 npm install @types/bluebird

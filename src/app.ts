@@ -3,11 +3,17 @@
 import express, { Application } from 'express';
 
 import * as bodyParser from "body-parser";
+
+import helmet from "helmet";
+import cors from "cors";
+
+
 import morgan from 'morgan';
 import "reflect-metadata";
 
 import indexRoute from './routes/index.routes';
-import companyRoute from './routes/company.routes'
+//import companyRoute from './routes/company.routes'
+import { indexRouter} from './routes/index.routes';
 
 import { Database } from './database';
 
@@ -15,6 +21,15 @@ import { Database } from './database';
 
 export  class App {
 
+    //options for cors midddleware
+    private options:cors.CorsOptions = {
+        allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+        credentials: true,
+        methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+        //origin: API_URL,
+        preflightContinue: false
+    };
+    
     private app:  Application;
     
     
@@ -49,11 +64,16 @@ export  class App {
 
     private middlewares() {
         this.app.use(morgan('dev'));
+        this.app.use(cors(this.options));
+        this.app.use(helmet());
     }
 
     private routes() {
-        this.app.use(indexRoute);
-        this.app.use(companyRoute);
+
+        //this.app.use(indexRoute);
+        //this.app.use(companyRoute);
+        let router = new indexRouter(this.app);
+        router.setRouter();
     }
 
     public async database() {
@@ -61,7 +81,7 @@ export  class App {
 
         const connection = await new Database().connect();
 
-        this.app.set('connection', connection);
+        //this.app.set('connection', connection);
         //console.log(connection);
         
     }

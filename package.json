@@ -21,14 +21,23 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/bluebird": "^3.5.30",
     "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.6",
+    "@types/helmet": "0.0.45",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "class-validator": "^0.11.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^3.21.3",
+    "jsonwebtoken": "^8.5.1",
     "log4js": "^6.1.2",
     "morgan": "^1.9.1",
     "mysql": "^2.14.1",
     "reflect-metadata": "^0.1.13",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typeorm": "^0.2.24"
   }
 }
