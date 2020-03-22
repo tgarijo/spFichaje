@@ -1,5 +1,4 @@
 
-// Application = interface
 import express, { Application } from 'express';
 
 import * as bodyParser from "body-parser";
@@ -7,17 +6,11 @@ import * as bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 
-
 import morgan from 'morgan';
 import "reflect-metadata";
 
-import indexRoute from './routes/index.routes';
-//import companyRoute from './routes/company.routes'
 import { indexRouter} from './routes/index.routes';
-
 import { Database } from './database';
-
-
 
 export  class App {
 
@@ -32,7 +25,6 @@ export  class App {
     
     private app:  Application;
     
-    
     // private port tiene alcance a toda la clase
     // y evitamos declararla como app
     constructor(private port?: number | string) 
@@ -44,9 +36,7 @@ export  class App {
         // Always before routes
         this.bodyParsec();
       
-        this.routes();
-        
-        
+        this.routes();        
     }
 
 
@@ -69,21 +59,13 @@ export  class App {
     }
 
     private routes() {
-
-        //this.app.use(indexRoute);
-        //this.app.use(companyRoute);
         let router = new indexRouter(this.app);
         router.setRouter();
     }
 
     public async database() {
-        const database =  require ('./database');
-
-        const connection = await new Database().connect();
-
-        //this.app.set('connection', connection);
-        //console.log(connection);
-        
+        //const database =  require ('./database');
+        const connection = await new Database().connect();        
     }
 
     async listen(){

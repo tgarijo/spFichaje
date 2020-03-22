@@ -71,10 +71,4 @@ export class CompanyController{
 
 }
 
-export async function companyController(req: Request, res: Response) {
-
-    
-   
-
-
-}
+//export async function companyController(req: Request, res: Response) {}

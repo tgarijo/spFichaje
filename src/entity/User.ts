@@ -5,11 +5,14 @@ import {
     Column,
     Unique,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
+    OneToMany
 
 } from "typeorm";
-import { Length, IsNotEmpty } from "class-validator";
+
+import { Length } from "class-validator";
 import * as bcrypt from "bcryptjs";
+import { Company } from "./Company";
 
 @Entity()
 @Unique(["username"])
@@ -41,6 +44,10 @@ export class User {
     @Column()
     @UpdateDateColumn()
     updateAt: Date;
+
+    // Relation 
+    @OneToMany(type => Company, company => company.id)
+    company: Company[];
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password,8);

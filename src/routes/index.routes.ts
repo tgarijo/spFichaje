@@ -8,13 +8,13 @@ const router = Router();
 
 export class indexRouter {
 
-    private App: Application;
+    private app: Application;
 
     constructor (App: Application){
-        this.App = App;
+        this.app = App;
     }
     public setRouter(){
-        this.App.use(companyRouter)
+        this.app.use(companyRouter)
     }
 
 }
