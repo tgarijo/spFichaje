@@ -10,6 +10,8 @@ import {
 
 } from "typeorm";
 
+import { IEntity } from './IEntity';
+
 import { Length } from "class-validator";
 import * as bcrypt from "bcryptjs";
 import { Company } from "./Company";

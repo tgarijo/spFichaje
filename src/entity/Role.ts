@@ -5,8 +5,10 @@ import {
     ManyToOne
 } from "typeorm";
 
+import { IEntity } from './IEntity'
+
 @Entity()
-export class Role {
+export class Role implements IEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

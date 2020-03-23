@@ -1,18 +1,10 @@
 import { Request, Response } from "express";
-import {  getManager, Repository } from "typeorm";
+import {  getManager } from "typeorm";
 
 import { Company } from "../entity/Company";
 
 export class CompanyController{
 
-    //companyRepository: Repository<Company>;
-
-    //private companyRepository = new  Repository<Company>();
-
-    constructor() {
-       
-        //this.companyRepository = getManager().getRepository(Company);
-    }
 
     public async save(req: Request, res: Response) {
 
@@ -62,8 +54,8 @@ export class CompanyController{
             
             return res.status(201).json(await companyRepository.findOne(id));
         } catch (error) {
-
-            
+            console.log(error);
+            return res.status(500).json("{error: Ha ocurrido un error}");            
         }
         
 
