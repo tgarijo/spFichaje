@@ -2,6 +2,7 @@ import { Router } from "express";
 import express, { Application } from 'express';
 import { indexWelcome } from "../controllers/index.controller";
 import companyRouter from './company.routes';
+import roleRouter from './role.routes';
 const router = Router();
 
 
@@ -13,16 +14,12 @@ export class indexRouter {
     constructor (App: Application){
         this.app = App;
     }
-    public setRouter(){
-        this.app.use(companyRouter)
-    }
 
+    // Setting routes
+    public setRouter(){
+        this.app.use(companyRouter);
+        this.app.use(roleRouter);
+    }
 }
-/*
-router.route('/')
-    .get(indexWelcome);
-    
-router.route('/company',companyRouter.route);
-*/
 
 export default router;
