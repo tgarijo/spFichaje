@@ -5,12 +5,11 @@ import {
     ManyToOne
 } from "typeorm";
 
-import { IEntity } from './IEntity';
 
 import { User } from './User'
 
 @Entity()
-export class Company implements IEntity{
+export class Company {
 
     constructor() {}
     
