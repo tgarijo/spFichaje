@@ -36,7 +36,11 @@ export  class App {
         // Always before routes
         this.bodyParsec();
       
-        this.routes();        
+        this.routes();    
+        
+        this.database();
+    
+        this.listen();
     }
 
 
@@ -63,7 +67,7 @@ export  class App {
         router.setRouter();
     }
 
-    public async database() {
+    private async database() {
         //const database =  require ('./database');
         const connection = await new Database().connect();        
     }
