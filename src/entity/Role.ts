@@ -5,7 +5,7 @@ import {
     ManyToOne
 } from "typeorm";
 
-
+@Entity()
 export class Role  {
 
     @PrimaryGeneratedColumn()

@@ -3,9 +3,12 @@ import { App } from './app';
 
 const  PORT = 3000;
 
-async function main() {
+ export async function main() {
     const app = new App(PORT);
   
+    await app.listen();
+    await app.database();
+    
     
 
 }

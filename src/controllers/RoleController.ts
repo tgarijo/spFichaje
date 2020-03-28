@@ -13,6 +13,7 @@ export class RoleController{
         try {
 
             // get a post repository to perform operations with post
+            
             let roleRepository = getManager().getRepository(Role);
 
             let role = roleRepository.create(req.body);
@@ -34,7 +35,9 @@ export class RoleController{
         try {
 
             let roleRepository = getManager().getRepository(Role);
-            return res.status(200).json(await  roleRepository.findAndCount());
+            let todos = await  roleRepository.findAndCount()
+            return res.status(200).json({error: null, data: todos});
+            
 
         } catch (error) {
             console.log(error);

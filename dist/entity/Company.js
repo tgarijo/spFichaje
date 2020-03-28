@@ -10,7 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const User_1 = require("./User");
 let Company = class Company {
+    constructor() { }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -18,16 +20,24 @@ __decorate([
 ], Company.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column({
-        length: 200
+        length: 200,
+        nullable: false
     }),
     __metadata("design:type", String)
 ], Company.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column({
+        nullable: true
+    }),
     __metadata("design:type", String)
 ], Company.prototype, "image", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => User_1.User, user => user.id),
+    __metadata("design:type", User_1.User)
+], Company.prototype, "user", void 0);
 Company = __decorate([
-    typeorm_1.Entity()
+    typeorm_1.Entity(),
+    __metadata("design:paramtypes", [])
 ], Company);
 exports.Company = Company;
 //# sourceMappingURL=Company.js.map

@@ -16,7 +16,9 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = new app_1.App(PORT);
         yield app.listen();
+        yield app.database();
     });
 }
+exports.main = main;
 main();
 //# sourceMappingURL=index.js.map

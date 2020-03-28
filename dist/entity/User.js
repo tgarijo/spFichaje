@@ -8,9 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const class_validator_1 = require("class-validator");
+const bcrypt = __importStar(require("bcryptjs"));
+const Company_1 = require("./Company");
 let User = class User {
+    hashPassword() {
+        this.password = bcrypt.hashSync(this.password, 8);
+    }
+    checkIfUnencryptedPasswordIsValid(unencryptedPassword) {
+        return bcrypt.compareSync(unencryptedPassword, this.password);
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -18,18 +34,41 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),
+    class_validator_1.Length(4, 20),
+    __metadata("design:type", String)
+], User.prototype, "username", void 0);
+__decorate([
+    typeorm_1.Column(),
+    class_validator_1.Length(4, 100),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    typeorm_1.Column(),
+    class_validator_1.Length(1, 50),
     __metadata("design:type", String)
 ], User.prototype, "firstName", void 0);
 __decorate([
     typeorm_1.Column(),
+    class_validator_1.Length(1, 50),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", Number)
-], User.prototype, "age", void 0);
+    typeorm_1.CreateDateColumn(),
+    __metadata("design:type", Date)
+], User.prototype, "createdAt", void 0);
+__decorate([
+    typeorm_1.Column(),
+    typeorm_1.UpdateDateColumn(),
+    __metadata("design:type", Date)
+], User.prototype, "updateAt", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => Company_1.Company, company => company.id),
+    __metadata("design:type", Array)
+], User.prototype, "company", void 0);
 User = __decorate([
-    typeorm_1.Entity()
+    typeorm_1.Entity(),
+    typeorm_1.Unique(["username"])
 ], User);
 exports.User = User;
 //# sourceMappingURL=User.js.map

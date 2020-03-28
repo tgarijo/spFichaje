@@ -37,10 +37,8 @@ export  class App {
         this.bodyParsec();
       
         this.routes();    
+
         
-        this.database();
-    
-        this.listen();
     }
 
 
@@ -67,7 +65,8 @@ export  class App {
         router.setRouter();
     }
 
-    private async database() {
+    public async database() {
+        console.log("starting database instace...");
         //const database =  require ('./database');
         const connection = await new Database().connect();        
     }
