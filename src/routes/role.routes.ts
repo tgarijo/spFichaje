@@ -1,16 +1,18 @@
 import { Router } from "express";
 import { RoleController } from "../controllers/RoleController";
-
+import { RoleService } from "../services/RoleService";
 const router = Router();
 
 console.log('RoleRoute');
 
+let roleService = new RoleService();
+
 router.route('/role')    
-    .post( new RoleController().save)
-    .get( new RoleController().get);
+    .post(roleService.save)
+    .get(roleService.get);
 
 router.route('/role/:id')
-    .get(new RoleController().getById);
+    .get(roleService.getById);
 
 
 

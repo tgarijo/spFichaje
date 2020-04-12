@@ -1,66 +1,58 @@
-import { Request, Response } from "express";
-import {  getManager, Repository } from "typeorm";
+
+import {  getManager } from "typeorm";
 
 import { Role } from "../entity/Role";
 
 export class RoleController{
 
 
-    public async save(req: Request, res: Response) {
+    public async save(data: object) {
 
         console.log("RoleController.save()");
-
+       
         try {
 
             // get a post repository to perform operations with post
             
             let roleRepository = getManager().getRepository(Role);
 
-            let role = roleRepository.create(req.body);
+            let role = roleRepository.create(data);
     
-            await roleRepository.save(role);
-        
-            return res.status(200).json(roleRepository.getId)
+            return await roleRepository.save(role);
         
         } catch (error) {
-            console.log(error);
-            return res.status(500).json("{error: Ha ocurrido un error}");
+            throw new error;
+            
+            
+            //return res.status(500).json("{error: Ha ocurrido un error}");
         }
 
     }
 
-    public async get(req: Request, res: Response) {
+    public async get() {
         console.log("RoleController.get()");
         
         try {
-
+            console.log("angtes roleRepository");
             let roleRepository = getManager().getRepository(Role);
-            let todos = await  roleRepository.findAndCount()
-            return res.status(200).json({error: null, data: todos});
-            
+            return await  roleRepository.findAndCount()            
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json("{error: Ha ocurrido un error}");
+            throw new Error(error);
         }        
     }
 
-    public async getById(req: Request, res: Response) {
+    public async getById(id: number) {
         console.log("RoleController.getById()");
 
         try {           
-
             let roleRepository =  getManager().getRepository(Role);
-                       
-            let id = parseInt(req.params.id);
-            console.log(id);
-            
-            return res.status(201).json(await roleRepository.findOne(id));
-            
+            let role: Role = await roleRepository.findOneOrFail(id);
+            return role;
         } catch (error) {
-            console.log(error);
-            return res.status(500).json("{error: Ha ocurrido un error}");
-            
+            //console.log(error);
+            throw new Error(error);
         }
         
 

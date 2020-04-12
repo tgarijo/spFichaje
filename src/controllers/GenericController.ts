@@ -1,52 +1,55 @@
-
+import {
+    getManager, EntitySchema, EntityManager
+} from "typeorm";
 import { Company } from "../entity/Company";
 
-import { getManager } from "typeorm";
+ 
+export  class  GenericController{
 
-export class CompanyController {
+    private entity: EntityManager;
 
-  
+    constructor (entity: EntityManager ) {
+        this.entity = entity;
+    }
+
     public async save(data: object) {
-
         try {
 
             let repository = getManager().getRepository(Company);
 
             let saveData = repository.create(data);
-             await repository.save(saveData)
-
+    
+            return await repository.save(saveData);
+        
         } catch (error) {
-            throw new Error(error);
+            throw new error;
         }
     }
     public async get() {
-
+        
         try {
-            
-            let repository = getManager().getRepository(Company);
+         
+            let repository  = getManager().getRepository(Company);
             return await  repository.findAndCount()            
 
         } catch (error) {
             console.log(error);
             throw new Error(error);
-        }   
+        }        
     }
 
     public async getById(id: number) {
 
         try {           
+
             let repository =  getManager().getRepository(Company);
-            let company: Company = await repository.findOneOrFail(id);
-            return company;
-            
+            let data  = await repository.findOneOrFail(id);
+            return data;
+
         } catch (error) {
             //console.log(error);
             throw new Error(error);
         }
         
-
     }
-
 }
-
-//export async function companyController(req: Request, res: Response) {}

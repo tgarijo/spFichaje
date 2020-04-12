@@ -16,8 +16,8 @@ export class AuthController {
         }
 
         // Get user from database
-        const userRepository = getRepository(User);
-        let user: User;
+        let  userRepository = getRepository(User);
+        let user: User = new User();
         try {
             user = await userRepository.findOneOrFail({ where: { username }});
         } catch (error) {
@@ -36,7 +36,7 @@ export class AuthController {
         }
 
             //Sing JWT, valifd for 1 hour
-        const token =jwt.sign(
+        let token =jwt.sign(
             {userId: user.id, username: user.username},
             config.jwtSecret,
             { expiresIn: "1h"}
