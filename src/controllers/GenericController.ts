@@ -1,14 +1,14 @@
 import {
-    getManager, EntitySchema, EntityManager
-} from "typeorm";
+    getManager, ObjectType, EntitySchema, getRepository, Entity} from "typeorm";
 import { Company } from "../entity/Company";
+import { threadId } from "worker_threads";
 
  
-export  class  GenericController{
+export abstract  class  GenericController<T>{
 
-    private entity: EntityManager;
+    entity:  EntitySchema<T>
 
-    constructor (entity: EntityManager ) {
+    constructor(entity:  EntitySchema<T>) {
         this.entity = entity;
     }
 
@@ -25,12 +25,12 @@ export  class  GenericController{
             throw new error;
         }
     }
-    public async get() {
-        
+    public async get(){
+      
         try {
-         
-            let repository  = getManager().getRepository(Company);
-            return await  repository.findAndCount()            
+           console.log("Role Entity: ", this.entity);
+           let repository  = getRepository(this.entity);
+           let data = await repository.find();
 
         } catch (error) {
             console.log(error);
@@ -42,7 +42,7 @@ export  class  GenericController{
 
         try {           
 
-            let repository =  getManager().getRepository(Company);
+            let repository =  getManager().getRepository(this.entity);
             let data  = await repository.findOneOrFail(id);
             return data;
 
