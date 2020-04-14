@@ -6,7 +6,7 @@ import { threadId } from "worker_threads";
  
 export abstract  class  GenericController<T>{
 
-    entity:  EntitySchema<T>
+    entity:  EntitySchema<T> new EntitySchema()
 
     constructor(entity:  EntitySchema<T>) {
         this.entity = entity;
