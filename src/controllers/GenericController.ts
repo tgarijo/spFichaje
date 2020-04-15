@@ -1,15 +1,17 @@
 import {
-    getManager, ObjectType, EntitySchema, getRepository, Entity} from "typeorm";
+    getManager, EntitySchema, getRepository, Entity, BaseEntity, Repository} from "typeorm";
 import { Company } from "../entity/Company";
 import { threadId } from "worker_threads";
+import e from "express";
 
+export type ObjectType<T> = { new (): T } | Function;
  
 export abstract  class  GenericController<T>{
 
-    entity:  EntitySchema<T> new EntitySchema()
+    private repository: any;
 
-    constructor(entity:  EntitySchema<T>) {
-        this.entity = entity;
+    constructor(type: ObjectType<T>){
+        this.repository  = getManager().getRepository(type);
     }
 
     public async save(data: object) {
@@ -25,12 +27,14 @@ export abstract  class  GenericController<T>{
             throw new error;
         }
     }
+   
     public async get(){
       
         try {
-           console.log("Role Entity: ", this.entity);
-           let repository  = getRepository(this.entity);
-           let data = await repository.find();
+           
+            let data = await this.repository.find();
+
+            return data;
 
         } catch (error) {
             console.log(error);
@@ -42,8 +46,7 @@ export abstract  class  GenericController<T>{
 
         try {           
 
-            let repository =  getManager().getRepository(this.entity);
-            let data  = await repository.findOneOrFail(id);
+            let data  = await this.repository.findOneOrFail(id);
             return data;
 
         } catch (error) {

@@ -9,7 +9,7 @@ let roleService = new RoleService();
 
 router.route('/role')    
     .post(roleService.save)
-    .get(roleService.get);
+    .get(new RoleService().get);
 
 router.route('/role/:id')
     .get(roleService.getById);

@@ -1,30 +1,33 @@
 import { Request, Response } from 'express';
 import { RoleController } from '../controllers/RoleController';
 import { Role } from '../entity/Role';
+import { EntitySchema, Entity } from 'typeorm';
 
 export class RoleService {
 
+  
     public async save( req: Request, res: Response) {   
-        try {
+        // try {
 
-            let result =  await new RoleController().save(req.body);
-            return res.status(200).json(result);
+        //     let result =  await new RoleController().save(req.body);
+        //     return res.status(200).json(result);
 
-        } catch (error) {         
+        // } catch (error) {         
 
-            return res.status(400).json({
-                error: error.message,
-                data: null
-            })
-        }
+        //     return res.status(400).json({
+        //         error: error.message,
+        //         data: null
+        //     })
+        // }
     }
 
     public async get(req: Request, res: Response) {
         console.log("RoleService.get()");
-
+        //let roleController = new RoleController(Role);
+        
         try {
 
-            let todos = await new RoleController().get();
+            let todos = await  new RoleController(Role).get();
             return res.status(200).json({
                 error: null, 
                 data: todos
@@ -41,7 +44,7 @@ export class RoleService {
         let id = parseInt(req.params.id);
         console.log(id);
         try {
-            let role: Role= await new RoleController().getById(id);
+            let role = await new RoleController(Role).getById(id);
             return res.status(200).json({
                 error:null,
                 data: role

@@ -7,7 +7,7 @@ import { GenericController } from "../controllers/GenericController"
 export class RoleController extends GenericController<Role>{
 
   
-
+   
     // public async save(data: object) {
 
     //     console.log("RoleController.save()");
