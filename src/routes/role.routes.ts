@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RoleController } from "../controllers/RoleController";
+
 import { RoleService } from "../services/RoleService";
 const router = Router();
 
@@ -9,10 +9,12 @@ let roleService = new RoleService();
 
 router.route('/role')    
     .post(roleService.save)
-    .get(new RoleService().get);
+    .get(roleService.get);
+    
 
 router.route('/role/:id')
-    .get(roleService.getById);
+    .get(roleService.getById)
+    .put(roleService.update);
 
 
 

@@ -2,11 +2,17 @@ import {
     Entity,
     Column, 
     PrimaryGeneratedColumn, 
-    ManyToOne
+    ManyToOne,
+    BeforeInsert,
+    BeforeUpdate
 } from "typeorm";
 
+import { IRole } from "./IRole";
+import { validateOrReject } from "class-validator";
+
+
 @Entity()
-export class Role  {
+export class Role implements IRole {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -16,4 +22,10 @@ export class Role  {
         nullable: false
     })
     name: string;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async validate() {
+      await validateOrReject(this);
+    }
 }

@@ -1,43 +1,68 @@
-import {
-    getManager, EntitySchema, getRepository, Entity, BaseEntity, Repository} from "typeorm";
-import { Company } from "../entity/Company";
-import { threadId } from "worker_threads";
-import e from "express";
+import { getManager } from "typeorm";
+import { IGenericController } from './IController/IGenericController';
 
+// Solve problematic about object is a object or a fucntion
+// typeof Entity is a function
 export type ObjectType<T> = { new (): T } | Function;
  
-export abstract  class  GenericController<T>{
+export abstract class  GenericController<T> implements IGenericController{
 
     private repository: any;
-
+  
     constructor(type: ObjectType<T>){
         this.repository  = getManager().getRepository(type);
+    }
+
+    public async update(id: number, data: object){
+
+        try {
+            let getDataById: Object = await this.getById(id);
+
+            // Copy object properties from source to target
+            let UpdateData : Object = Object.assign(getDataById, data);
+
+            // Remove this code because is validate by hooks on entity file
+            //let  error = await validate(UpdateData);
+            // if(error.length > 0) throw new Error(error.toString()); 
+            
+           return await this.save(UpdateData);
+
+        } catch (error) {
+            throw new Error(error);
+        }
+
+    }
+
+    public async delete(id: number): Promise<any> {
+     
+        try {
+            let data =  await this.repository.findOneOrFail(id);
+        } catch (error) {
+            throw new Error (error);
+        }
+        return await this.repository.delete(id);
     }
 
     public async save(data: object) {
         try {
 
-            let repository = getManager().getRepository(Company);
-
-            let saveData = repository.create(data);
+            let saveData = this.repository.create(data);
     
-            return await repository.save(saveData);
+            return await this.repository.save(saveData);
         
         } catch (error) {
-            throw new error;
+            throw new Error (error);
         }
     }
    
     public async get(){
       
-        try {
-           
-            let data = await this.repository.find();
+        try {       
 
+            let data = await this.repository.find();
             return data;
 
-        } catch (error) {
-            console.log(error);
+        } catch (error) {          
             throw new Error(error);
         }        
     }
@@ -50,7 +75,7 @@ export abstract  class  GenericController<T>{
             return data;
 
         } catch (error) {
-            //console.log(error);
+            console.error("Error Message:", error.message);
             throw new Error(error);
         }
         
