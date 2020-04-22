@@ -9,50 +9,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
 const Company_1 = require("../entity/Company");
+const typeorm_1 = require("typeorm");
 class CompanyController {
-    save(req, res) {
+    save(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("CompanyController.save()");
             try {
-                // get a post repository to perform operations with post
-                let companyRepository = typeorm_1.getManager().getRepository(Company_1.Company);
-                let company = companyRepository.create(req.body);
-                yield companyRepository.save(company);
-                return res.status(200).json(companyRepository.getId);
+                let repository = typeorm_1.getManager().getRepository(Company_1.Company);
+                let saveData = repository.create(data);
+                yield repository.save(saveData);
             }
             catch (error) {
-                console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
+                throw new Error(error);
             }
         });
     }
-    get(req, res) {
+    get() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("CompanyController.get()");
             try {
-                let companyRepository = typeorm_1.getManager().getRepository(Company_1.Company);
-                return res.status(200).json(yield companyRepository.findAndCount());
+                let repository = typeorm_1.getManager().getRepository(Company_1.Company);
+                return yield repository.findAndCount();
             }
             catch (error) {
                 console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
+                throw new Error(error);
             }
         });
     }
-    getById(req, res) {
+    getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("CompanyController.getById()");
             try {
-                let companyRepository = typeorm_1.getManager().getRepository(Company_1.Company);
-                let id = parseInt(req.params.id);
-                console.log(id);
-                return res.status(201).json(yield companyRepository.findOne(id));
+                let repository = typeorm_1.getManager().getRepository(Company_1.Company);
+                let company = yield repository.findOneOrFail(id);
+                return company;
             }
             catch (error) {
-                console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
+                //console.log(error);
+                throw new Error(error);
             }
         });
     }

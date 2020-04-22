@@ -14,19 +14,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const node_fetch_1 = __importDefault(require("node-fetch"));
-var url = "http://localhost:3000/role";
-describe('API REST getRole', () => {
+const CompanyController_1 = require("../controllers/CompanyController");
+var url = "http://localhost:3000/user";
+describe('API REST save', () => {
+    it('PUT', () => __awaiter(void 0, void 0, void 0, function* () {
+        let company = CompanyController_1.CompanyController;
+        let role = {};
+        let user = {
+            username: 'tgarijo',
+            password: 'tgarijo',
+            firstName: 'Tomas',
+            lastName: 'Garijo'
+        };
+    }));
+});
+describe('API REST getUser', () => {
     it('GET', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield node_fetch_1.default(url);
         chai_1.expect(response.status).to.be.equal(200);
-        const roles = yield response.json();
-        chai_1.expect(roles.data).to.be.an('Array');
-        chai_1.expect(roles.error).to.be.null;
-        if (roles.data) {
-            roles.data.forEach((role) => {
-                console.log(role);
+        const users = yield response.json();
+        chai_1.expect(users.data).to.be.an('Array');
+        chai_1.expect(users.error).to.be.null;
+        if (users.data) {
+            users.data.forEach((user) => {
+                console.log(user);
             });
         }
     }));
 });
-//# sourceMappingURL=testRole.test.js.map
+//# sourceMappingURL=testUser.test.js.map

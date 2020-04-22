@@ -7,12 +7,15 @@ export type ObjectType<T> = { new (): T } | Function;
  
 export abstract class  GenericController<T> implements IGenericController{
 
-    private repository: any;
+    protected repository: any;
   
     constructor(type: ObjectType<T>){
         this.repository  = getManager().getRepository(type);
     }
 
+    protected getRepository() : any {
+        return this.repository;
+    }
     public async update(id: number, data: object){
 
         try {
@@ -46,7 +49,7 @@ export abstract class  GenericController<T> implements IGenericController{
     public async save(data: object) {
         try {
 
-            let saveData = this.repository.create(data);
+            let saveData  = this.repository.create(data);
     
             return await this.repository.save(saveData);
         

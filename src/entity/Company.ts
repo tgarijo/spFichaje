@@ -27,6 +27,6 @@ export class Company {
     })
     image: string
 
-    @ManyToOne(type => User, user => user.id)
-    user: User;
+    // @ManyToOne(type => User, user => user.id)
+    // user: User;
 }

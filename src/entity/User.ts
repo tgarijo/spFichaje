@@ -7,12 +7,14 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     OneToMany,
-    ManyToOne
+    ManyToOne,
+    BeforeInsert,
+    BeforeUpdate
 
 } from "typeorm";
 
 
-import { Length } from "class-validator";
+import { Length, validateOrReject } from "class-validator";
 import * as bcrypt from "bcryptjs";
 import { Company } from "./Company";
 import { Role } from "./Role";
@@ -48,10 +50,17 @@ export class User {
     @UpdateDateColumn()
     updateAt: Date;
 
-    // Relation 
-    @OneToMany(type => Company, company => company.id)
-    company: Company[];
 
+    @BeforeInsert()
+    setPassword() {
+        this.hashPassword();
+    }
+    @BeforeUpdate()
+    async validate() {
+      await validateOrReject(this);
+    }
+    
+   
     @ManyToOne(type => Role, role => role.id)
     role: Role;
 

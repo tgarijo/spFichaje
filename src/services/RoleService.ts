@@ -9,7 +9,8 @@ export class RoleService {
         try {
 
             let result =  await new RoleController(Role).save(req.body);
-            return res.status(200).json(responseData(result, null)).send();
+            // 
+            return res.status(201).json(responseData(result, null)).send();
             //return res.status(200).json(result);
 
         } catch (error) {         
@@ -24,7 +25,7 @@ export class RoleService {
         try {
 
             let result = new RoleController(Role).update(parseInt(id),  req.body)
-            return res.status(200).json(responseData(result, null)).send();
+            return res.status(201).json(responseData(result, null)).send();
             //return res.status(200).json(result);
 
         } catch (error) {         
@@ -56,5 +57,17 @@ export class RoleService {
             //console.log("Error number " , error)
             return res.status(500).json(responseData(null, error.message)).send()
         }
+    }
+
+    public async getWithUser(req: Request, res:Response) {
+        try {
+            let role: Role = await new RoleController(Role).getWithUser()
+            return res.status(200).json(responseData(role, null)).send();
+
+        } catch (error) {
+            //console.log("Error number " , error)
+            return res.status(500).json(responseData(null, error.message)).send()
+        }
+        
     }
 }

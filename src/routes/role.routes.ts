@@ -10,12 +10,12 @@ let roleService = new RoleService();
 router.route('/role')    
     .post(roleService.save)
     .get(roleService.get);
-    
 
 router.route('/role/:id')
     .get(roleService.getById)
     .put(roleService.update);
 
-
+router.route("/role/getWithUser")
+    .get(roleService.getWithUser);
 
 export default router;

@@ -8,6 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -20,7 +29,13 @@ const typeorm_1 = require("typeorm");
 const class_validator_1 = require("class-validator");
 const bcrypt = __importStar(require("bcryptjs"));
 const Company_1 = require("./Company");
+const Role_1 = require("./Role");
 let User = class User {
+    validate() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield class_validator_1.validateOrReject(this);
+        });
+    }
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);
     }
@@ -63,9 +78,20 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updateAt", void 0);
 __decorate([
+    typeorm_1.BeforeInsert(),
+    typeorm_1.BeforeUpdate(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "validate", null);
+__decorate([
     typeorm_1.OneToMany(type => Company_1.Company, company => company.id),
     __metadata("design:type", Array)
 ], User.prototype, "company", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Role_1.Role, role => role.id),
+    __metadata("design:type", Role_1.Role)
+], User.prototype, "role", void 0);
 User = __decorate([
     typeorm_1.Entity(),
     typeorm_1.Unique(["username"])

@@ -9,51 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
-const Role_1 = require("../entity/Role");
-class RoleController {
-    save(req, res) {
+const GenericController_1 = require("../controllers/GenericController");
+class RoleController extends GenericController_1.GenericController {
+    getWithUser() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("RoleController.save()");
-            try {
-                // get a post repository to perform operations with post
-                let roleRepository = typeorm_1.getManager().getRepository(Role_1.Role);
-                let role = roleRepository.create(req.body);
-                yield roleRepository.save(role);
-                return res.status(200).json(roleRepository.getId);
-            }
-            catch (error) {
-                console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
-            }
-        });
-    }
-    get(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log("RoleController.get()");
-            try {
-                let roleRepository = typeorm_1.getManager().getRepository(Role_1.Role);
-                return res.status(200).json(yield roleRepository.findAndCount());
-            }
-            catch (error) {
-                console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
-            }
-        });
-    }
-    getById(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log("RoleController.getById()");
-            try {
-                let roleRepository = typeorm_1.getManager().getRepository(Role_1.Role);
-                let id = parseInt(req.params.id);
-                console.log(id);
-                return res.status(201).json(yield roleRepository.findOne(id));
-            }
-            catch (error) {
-                console.log(error);
-                return res.status(500).json("{error: Ha ocurrido un error}");
-            }
+            console.log("Repository: ", this.repository);
+            let data = yield this.repository.find({ relations: ["user"] });
+            return data;
         });
     }
 }

@@ -2,13 +2,14 @@ import {
     Entity,
     Column, 
     PrimaryGeneratedColumn, 
-    ManyToOne,
     BeforeInsert,
-    BeforeUpdate
+    BeforeUpdate,
+    OneToMany
 } from "typeorm";
 
 import { IRole } from "./IRole";
 import { validateOrReject } from "class-validator";
+import { User } from "./User";
 
 
 @Entity()
@@ -23,9 +24,14 @@ export class Role implements IRole {
     })
     name: string;
 
+    @OneToMany(type => User, user => user.id)
+    user: User[];
+
     @BeforeInsert()
     @BeforeUpdate()
     async validate() {
       await validateOrReject(this);
     }
+
+   
 }
