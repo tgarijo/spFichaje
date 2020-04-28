@@ -27,3 +27,7 @@ sudo docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=r8437nr -d mysq
 
 ## ver procesos node
 pidof node 
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'eLPZaYKzPmHeNnPm';
+
+FLUSH PRIVILEGES;

@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 import {  getManager } from "typeorm";
 import * as bcrypt from "bcryptjs";
-import { RoleController } from '../controllers/RoleController';
+import { RoleService } from '../Service/RoleService';
 import { Role } from '../entity/Role';
 import { User } from "../entity/User";
-import { UserController } from "../controllers/UserController";
+import { UserService } from "../Service/UserService";
 
 //npm run typeorm migration:run   
 //npm run typeorm migration:revert
@@ -14,7 +14,7 @@ export class addUser1585399362483 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<any> {
         let password = bcrypt.hashSync('user_p', 8)
 
-        let roleController = new RoleController(Role);
+        let roleController = new UserService(Role);
         let role = await roleController.getById(1);
 
 
@@ -35,7 +35,7 @@ export class addUser1585399362483 implements MigrationInterface {
         userIndenty.role = roleIdenty;
         //console.log(JSON.stringify(userIndenty));
 
-        await new UserController(User).save(userIndenty);
+        await new UserService(User).save(userIndenty);
 
         //roleController.getById()
         

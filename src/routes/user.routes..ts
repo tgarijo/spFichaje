@@ -1,21 +1,18 @@
 import { Router } from "express";
 
-import { UserService } from "../services/UserService";
+import { UserController } from "../controller/UserController";
 const router = Router();
 
 console.log('UserRoute');
 
-let userService = new UserService();
+let userController = new UserController();
 
 router.route('/user')    
-    .post(userService.save)
-    //.get(roleService.get);
+    .post(userController.save)
+    .get(userController.get);
 
-// router.route('/role/:id')
-//     .get(roleService.getById)
-//     .put(roleService.update);
-
-// router.route("/role/getWithUser")
-//     .get(roleService.getWithUser);
+    router.route('/user/:id')
+    .get(userController.getById)
+    .put(userController.update);
 
 export default router;

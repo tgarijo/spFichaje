@@ -1,21 +1,23 @@
 import { Router } from "express";
 
-import { RoleService } from "../services/RoleService";
+import { RoleController} from "../controller/RoleController";
 const router = Router();
 
 console.log('RoleRoute');
 
-let roleService = new RoleService();
+let roleController = new RoleController();
 
 router.route('/role')    
-    .post(roleService.save)
-    .get(roleService.get);
+    .post(roleController.save)
+    .get(roleController.get);
 
 router.route('/role/:id')
-    .get(roleService.getById)
-    .put(roleService.update);
+    .get(roleController.getById)
+    .put(roleController.update)
+    .delete(roleController.delete);
 
-router.route("/role/getWithUser")
-    .get(roleService.getWithUser);
+
+router.route("/role-getWithUser")
+    .get(roleController.getWithUser );
 
 export default router;

@@ -4,7 +4,8 @@ import {
     PrimaryGeneratedColumn, 
     BeforeInsert,
     BeforeUpdate,
-    OneToMany
+    OneToMany,
+    JoinColumn
 } from "typeorm";
 
 import { IRole } from "./IRole";
@@ -24,8 +25,10 @@ export class Role implements IRole {
     })
     name: string;
 
-    @OneToMany(type => User, user => user.id)
+    @OneToMany(type => User, user => user.role) // apunta al many to Oner
     user: User[];
+
+    
 
     @BeforeInsert()
     @BeforeUpdate()

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import express, { Application } from 'express';
-import { indexWelcome } from "../controllers/index.controller";
+import { indexWelcome } from "../controller/index.controller";
 import companyRouter from './company.routes';
 import roleRouter from './role.routes';
 import userRouter from './user.routes.'

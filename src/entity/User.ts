@@ -9,7 +9,8 @@ import {
     OneToMany,
     ManyToOne,
     BeforeInsert,
-    BeforeUpdate
+    BeforeUpdate,
+    JoinColumn
 
 } from "typeorm";
 
@@ -49,6 +50,7 @@ export class User {
     @Column()
     @UpdateDateColumn()
     updateAt: Date;
+    user: Promise<any>;
 
 
     @BeforeInsert()
@@ -61,8 +63,11 @@ export class User {
     }
     
    
-    @ManyToOne(type => Role, role => role.id)
+    @ManyToOne(type => Role, role => role.user) // Apunta a @OneToMany
+    @JoinColumn()
     role: Role;
+
+  
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password,8);

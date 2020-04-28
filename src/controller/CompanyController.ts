@@ -1,10 +1,10 @@
 import { getManager, EntityManager, EntitySchema, Repository } from "typeorm";
 import  { Request, Response } from "express";
 import { Company } from "../entity/Company";
-import { CompanyController } from '../controllers/CompanyController'
+import { CompanyService } from '../Service/CompanyService'
 // import { ICompany } from './ICompany';
 
-export class CompanyService {
+export class  CompanyController{
 
     //const postRepository = getManager().getRepository(Company);
     
@@ -18,7 +18,7 @@ export class CompanyService {
     public async save( req: Request, res: Response) {   
         try {
 
-            let result =  await new CompanyController().save(req.body);
+            let result =  await new CompanyService().save(req.body);
             return res.status(200).json(result);
 
         } catch (error) {         
@@ -32,7 +32,7 @@ export class CompanyService {
 
     public async get( req: Request, res: Response) {
         try {
-            let result =  await new CompanyController().get();
+            let result =  await new CompanyService().get();
             return res.status(200).json(result);
         } catch (error) {
             return res.status(400).json({

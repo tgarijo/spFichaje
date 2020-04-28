@@ -1,19 +1,18 @@
 import { Router } from "express";
-import { CompanyController } from "../controllers/CompanyController";
+import { CompanyController } from "../controller/CompanyController";
 
-import { CompanyService } from '../services/company.service'
-import { Company } from "../entity/Company";
+let companyController = new CompanyController();
 
 const router = Router();
 
 console.log('companyRoute');
 
 router.route('/company')    
-    .post( new CompanyController().save)
-    .get( new CompanyService().get);
+    // .post( new CompanyController.save())
+    // .get( new CompanyController.get);
 
 router.route('/company/:id')
-    .get(new CompanyController().getById);
+    // .get(new CompanyController().getById);
 
     
     

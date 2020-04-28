@@ -1,11 +1,11 @@
 import { getManager } from "typeorm";
-import { IGenericController } from './IController/IGenericController';
+import { IGenericService } from './IService/IGenericService';
 
 // Solve problematic about object is a object or a fucntion
 // typeof Entity is a function
 export type ObjectType<T> = { new (): T } | Function;
  
-export abstract class  GenericController<T> implements IGenericController{
+export abstract class  GenericService<T> implements IGenericService{
 
     protected repository: any;
   
@@ -38,12 +38,14 @@ export abstract class  GenericController<T> implements IGenericController{
 
     public async delete(id: number): Promise<any> {
      
+        console.log("ID: ", id);
+        
         try {
-            let data =  await this.repository.findOneOrFail(id);
+            return await this.repository.delete(id);
         } catch (error) {
             throw new Error (error);
         }
-        return await this.repository.delete(id);
+       
     }
 
     public async save(data: object) {

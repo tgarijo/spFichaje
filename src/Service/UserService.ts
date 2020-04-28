@@ -1,11 +1,8 @@
-import { Request, Response } from 'express';
-import { getRepository } from "typeorm";
-import { validate } from 'class-validator';
 
 import { User } from '../entity/User';
-import { GenericController } from './GenericController';
+import { GenericService } from './GenericService';
 
-export class UserController extends GenericController<User>{
+export class UserService extends GenericService<User>{
 
     // public async getAll(req: Request, res: Response){
     //     const userRepository = getRepository(User);

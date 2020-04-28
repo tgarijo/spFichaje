@@ -1,9 +1,17 @@
 import { expect } from "chai";
 import fetch from 'node-fetch';
 
+import { Role } from "../entity/Role";
+import { IResponseData } from "../utils/IResponseData";
+
+
+
 var url ="http://localhost:3000/role";
 
-describe('API REST getRole', () => {
+console.log("Getting Roles from DDBB")
+console.log("-----------------------")
+
+describe('API REST get Role', () => {
     it('GET', async () => {
         const response = await fetch(url);
         expect(response.status).to.be.equal(200);
@@ -20,3 +28,41 @@ describe('API REST getRole', () => {
        
     })
 })
+
+describe('API REST post Role', () => {
+    it('POST', async () => {
+
+        let role : Role = new Role();
+        role.name = "test";
+        
+        const postResponse = await fetch(url,{
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(role)
+        });
+
+    
+        expect(await postResponse.status).to.be.equal(201);
+
+        //console.log("Role saved: ",  await postResponse.json());
+
+        let dataResponse = <IResponseData> await postResponse.json();
+
+        let roleDelete =  <Role> dataResponse.data;
+
+        console.log("Role to Delete: " , roleDelete);
+
+        const deleteResponse = await fetch(url + '/' + roleDelete.id, {
+            method: 'DELETE',
+        });
+
+        expect(await deleteResponse.status).to.be.equal(201);
+
+        console.log(await deleteResponse.json());
+    })
+})
+
+

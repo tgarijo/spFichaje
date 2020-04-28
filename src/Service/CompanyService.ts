@@ -3,7 +3,7 @@ import { Company } from "../entity/Company";
 
 import { getManager } from "typeorm";
 
-export class CompanyController {
+export class CompanyService {
 
   
     public async save(data: object) {

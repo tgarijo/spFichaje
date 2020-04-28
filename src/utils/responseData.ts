@@ -1,4 +1,6 @@
+import { IResponseData } from "./IResponseData";
 
 export let responseData =  (data: string | null | object, error: string |null )  =>{
-  return {data:data, error:error};
+  let DataResponse : IResponseData = {data:data, error:error};
+  return DataResponse;
 }

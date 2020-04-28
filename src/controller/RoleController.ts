@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
-import { RoleController } from '../controllers/RoleController';
+import { RoleService } from '../Service/RoleService';
 import { Role } from '../entity/Role';
 import { responseData } from '../utils/responseData';
 
-export class RoleService {
+
+export class RoleController {
 
     public async save( req: Request, res: Response) {   
         try {
 
-            let result =  await new RoleController(Role).save(req.body);
+            let result =  await new RoleService(Role).save(req.body);
             // 
             return res.status(201).json(responseData(result, null)).send();
             //return res.status(200).json(result);
@@ -18,13 +19,23 @@ export class RoleService {
         }
     }
 
+    public async delete (req: Request, res: Response) {
+        let id = req.params.id;
+
+        try {
+            let result = new RoleService(Role).delete(parseInt(id));
+            return res.status(201).json(responseData(result, null)).send();
+        } catch (error) {
+            return res.status(500).json(responseData(null, error)).send();
+        }
+    }
     public async update(req: Request, res: Response) {
         // Get the ID from the url
         const id = req.params.id;
 
         try {
 
-            let result = new RoleController(Role).update(parseInt(id),  req.body)
+            let result = new RoleService(Role).update(parseInt(id),  req.body)
             return res.status(201).json(responseData(result, null)).send();
             //return res.status(200).json(result);
 
@@ -38,7 +49,7 @@ export class RoleService {
        
         try {
             // role as typeof object
-            let role: Role = await  new RoleController(Role).get();
+            let role: Role = await  new RoleService(Role).get();
             return res.status(200).json(responseData(role, null)).send();
 
         } catch (error) {
@@ -50,7 +61,7 @@ export class RoleService {
         let id = parseInt(req.params.id);
  
         try {
-            let role : Role = await new RoleController(Role).getById(id);
+            let role : Role = await new RoleService(Role).getById(id);
             return res.status(200).json(responseData(role, null)).send();
 
         } catch (error) {
@@ -61,7 +72,7 @@ export class RoleService {
 
     public async getWithUser(req: Request, res:Response) {
         try {
-            let role: Role = await new RoleController(Role).getWithUser()
+            let role: Role = await new RoleService(Role).getWithUser()
             return res.status(200).json(responseData(role, null)).send();
 
         } catch (error) {
