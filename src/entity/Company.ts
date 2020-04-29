@@ -1,12 +1,13 @@
 import {
     Entity,
     Column, 
-    PrimaryGeneratedColumn, 
-    ManyToOne
+    PrimaryGeneratedColumn,
+    OneToMany, 
+
 } from "typeorm";
 
+import { Center } from "./Center"
 
-import { User } from './User'
 
 @Entity()
 export class Company {
@@ -27,6 +28,6 @@ export class Company {
     })
     image: string
 
-    // @ManyToOne(type => User, user => user.id)
-    // user: User;
+    @OneToMany(type => Center, center => center.company) // apunta al many to Oner
+    center: Center[];
 }

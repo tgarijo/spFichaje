@@ -24,6 +24,17 @@ export class UserController {
   
   }
 
+  public async delete (req: Request, res: Response) {
+    let id = req.params.id;
+
+    try {
+        let result = new UserService(User).delete(parseInt(id));
+        return res.status(201).json(responseData(result, null)).send();
+    } catch (error) {
+        return res.status(500).json(responseData(null, error)).send();
+    }
+}
+
   public async update(req: Request, res: Response) {
       // Get the ID from the url
       const id = req.params.id;

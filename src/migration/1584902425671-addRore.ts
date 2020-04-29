@@ -12,8 +12,10 @@ export class addRore1584902425671 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query('TRUNCATE TABLE "role"');
-        await queryRunner.query(`DELETE FROM "roles"`);
+        
+        await queryRunner.query(`DELETE FROM role`);
+        await queryRunner.query('TRUNCATE TABLE role');
+        
     }
 
 }

@@ -25,6 +25,8 @@ export class Role implements IRole {
     })
     name: string;
 
+    
+
     @OneToMany(type => User, user => user.role) // apunta al many to Oner
     user: User[];
 

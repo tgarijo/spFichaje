@@ -13,6 +13,7 @@ router.route('/user')
 
     router.route('/user/:id')
     .get(userController.getById)
-    .put(userController.update);
+    .put(userController.update)
+    .delete(userController.delete);
 
 export default router;

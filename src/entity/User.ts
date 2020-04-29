@@ -19,10 +19,11 @@ import { Length, validateOrReject } from "class-validator";
 import * as bcrypt from "bcryptjs";
 import { Company } from "./Company";
 import { Role } from "./Role";
+import { Center } from "./Center";
 
 @Entity()
 @Unique(["username"])
-export class User {
+export  class User {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -36,11 +37,11 @@ export class User {
     password: string
 
     @Column()
-    @Length(1,50)
+    @Length(50)
     firstName: string;
 
     @Column()
-    @Length(1,50)
+    @Length(50)
     lastName: string;
 
     @Column()
@@ -50,7 +51,7 @@ export class User {
     @Column()
     @UpdateDateColumn()
     updateAt: Date;
-    user: Promise<any>;
+    //user: Promise<any>;
 
 
     @BeforeInsert()
@@ -67,7 +68,8 @@ export class User {
     @JoinColumn()
     role: Role;
 
-  
+    @OneToMany(type => Center, center => center.user) // apunta al many to Oner
+    center: Center[];
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password,8);

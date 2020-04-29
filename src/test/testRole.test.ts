@@ -20,16 +20,16 @@ describe('API REST get Role', () => {
         expect(roles.data).to.be.an('Array');
         expect(roles.error).to.be.null;
         
-        if(roles.data){
-            roles.data.forEach((role: any) => {
-                console.log(role);
-            });
-        }
+        // if(roles.data){
+        //     roles.data.forEach((role: any) => {
+        //         console.log(role);
+        //     });
+        // }
        
     })
 })
 
-describe('API REST post Role', () => {
+describe('API REST Save and Delete Role', () => {
     it('POST', async () => {
 
         let role : Role = new Role();
@@ -47,13 +47,12 @@ describe('API REST post Role', () => {
     
         expect(await postResponse.status).to.be.equal(201);
 
-        //console.log("Role saved: ",  await postResponse.json());
-
+        // Start delete record created before
         let dataResponse = <IResponseData> await postResponse.json();
 
         let roleDelete =  <Role> dataResponse.data;
 
-        console.log("Role to Delete: " , roleDelete);
+        // console.log("Role to Delete: " , roleDelete);
 
         const deleteResponse = await fetch(url + '/' + roleDelete.id, {
             method: 'DELETE',
@@ -61,7 +60,6 @@ describe('API REST post Role', () => {
 
         expect(await deleteResponse.status).to.be.equal(201);
 
-        console.log(await deleteResponse.json());
     })
 })
 

@@ -25,6 +25,9 @@ sudo docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=r8437nr -d mysq
 #Migrations
 ./node_modules/.bin/typeorm migration:create -n addRole
 
+#Windows
+.\node_modules\.bin\typeorm migration:create -n addCenter 
+
 ## ver procesos node
 pidof node 
 
