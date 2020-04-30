@@ -6,7 +6,7 @@
    "password": "r8437nr",
    "database": "node_spfichaje_ts",
    "synchronize": true,
-   "logging": false,
+   "logging": ["query", "error"],
    "entities": [
       "src/entity/**/*.ts"
    ],

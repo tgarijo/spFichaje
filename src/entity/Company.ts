@@ -1,29 +1,34 @@
 import {
     Entity,
     Column, 
-    PrimaryGeneratedColumn,
     OneToMany, 
 
 } from "typeorm";
 
 import { Center } from "./Center"
+import { Content } from "./Content";
 
 
 @Entity()
-export class Company {
-
-    constructor() {}
-    
-    @PrimaryGeneratedColumn()
-    id: number;
+export class Company extends Content{
 
     @Column({
-        length: 200,
+        type: "varchar",
+        length: 100, 
         nullable: false
     })
     name: string;
 
     @Column({
+        type: "varchar",
+        length: 100, 
+        nullable: true
+    })
+    adress: string;
+
+    @Column({
+        type: "varchar",
+        length: 255, 
         nullable: true
     })
     image: string

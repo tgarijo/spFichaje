@@ -1,12 +1,9 @@
 
 import {
     Entity, 
-    PrimaryGeneratedColumn, 
     Column,
     Unique,
-    CreateDateColumn,
-    UpdateDateColumn,
-    OneToMany,
+     OneToMany,
     ManyToOne,
     BeforeInsert,
     BeforeUpdate,
@@ -15,44 +12,56 @@ import {
 } from "typeorm";
 
 
-import { Length, validateOrReject } from "class-validator";
+import { validateOrReject, IsEmail, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
-import { Company } from "./Company";
+
 import { Role } from "./Role";
 import { Center } from "./Center";
+import { Content } from "./Content";
 
 @Entity()
-@Unique(["username"])
-export  class User {
+export  class User extends Content {
 
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column()
-    @Length(4, 20)
+    
+    @Column({
+        type: "varchar",
+        length: 25,
+        unique: true
+    })
     username: string;
 
-    @Column()
-    @Length(4,100)
+    @Column({
+        type: "varchar",
+        length: 100,
+        nullable: false
+    })
     password: string
 
-    @Column()
-    @Length(50)
+    @Column({
+        type: "varchar",
+        length: 50,
+        nullable: false
+    })
     firstName: string;
 
-    @Column()
-    @Length(50)
+    @Column({
+        type: "varchar",
+        length: 50,
+        nullable: true
+    })
     lastName: string;
 
-    @Column()
-    @CreateDateColumn()
-    createdAt: Date;
+    @Column({
+        type: "varchar",
+        length: 50,
+        nullable: true
+    })
+    @IsEmail({}, { message: 'Incorrect email' })
+    @IsNotEmpty({ message: 'The email is required' })
+    email: string;
 
     @Column()
-    @UpdateDateColumn()
-    updateAt: Date;
-    //user: Promise<any>;
-
+    isActive: boolean;
 
     @BeforeInsert()
     setPassword() {

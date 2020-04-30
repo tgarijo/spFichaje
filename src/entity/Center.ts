@@ -1,27 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Length } from "class-validator";
+import { Entity,  Column,  ManyToOne, JoinColumn } from "typeorm";
 import { Company } from "./Company";
 
 import { User } from "./User";
+import { Content } from "./Content";
 
 @Entity()
-export class Center {
+export class Center extends Content{
 
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  @Length(25)
+  @Column({
+    type: "varchar",
+    length: 100, 
+    nullable: false
+  })
   name: string
-
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updateAt: Date;
-
 
   @ManyToOne(type => Company, company => company.center) // Apunta a @OneToMany
   @JoinColumn()
@@ -29,6 +20,5 @@ export class Center {
   
   @ManyToOne(type => User, user => user.center) // Apunta a @OneToMany
   @JoinColumn()
-  user: User;
-  
+  user: User; 
 }

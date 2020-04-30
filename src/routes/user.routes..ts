@@ -11,9 +11,9 @@ router.route('/user')
     .post(userController.save)
     .get(userController.get);
 
-    router.route('/user/:id')
-    .get(userController.getById)
-    .put(userController.update)
-    .delete(userController.delete);
+router.route('/user/:id')
+.get(userController.getById)
+.put(userController.update)
+.delete(userController.delete);
 
 export default router;
