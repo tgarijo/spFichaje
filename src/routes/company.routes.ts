@@ -8,13 +8,13 @@ const router = Router();
 console.log('companyRoute');
 
 router.route('/company')    
-    // .post( new CompanyController.save())
-    // .get( new CompanyController.get);
+    .post(companyController.save)
+    .get(companyController.get);
 
 router.route('/company/:id')
-    // .get(new CompanyController().getById);
-
-    
+    .get(companyController.getById)
+    .put(companyController.update)
+    .delete(companyController.delete);
     
 
 export default router;

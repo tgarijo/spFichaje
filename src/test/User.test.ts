@@ -5,12 +5,14 @@ import { IResponseData } from "../utils/IResponseData";
 import { Role } from "../entity/Role";
 
 
-let userUrl: string ="http://localhost:3000/user";
-let  roleUrl: string ="http://localhost:3000/role";
-let roleId: number = 1;
+const userUrl: string ="http://localhost:3000/user";
+const roleUrl: string ="http://localhost:3000/role";
 
-describe('API REST User', () => {
-    it('GET All User', async () => {
+console.log("Getting Roles from DDBB")
+console.log("-----------------------")
+
+describe('User Test', () => {
+    it('GET All data', async () => {
         const response = await fetch(userUrl);
         expect(response.status).to.be.equal(200);
         
@@ -25,27 +27,33 @@ describe('API REST User', () => {
         // }
        
     })
-})
-describe('API REST Save an Delete  User', () => {
-    it('POST Save an Delete ', async () => {
-        let user: User = new User();
+
+    it('POST Save and Delete', async () => {
+
+        const roleId: number = 1;
+        const user: User = new User();
   
      
-        let getResponse =  await fetch(roleUrl + '/' + roleId);
+        const templateRole = `${roleUrl}/${roleId}`;
+
+        const getResponse =  await fetch(templateRole);
        
-        let roleResponse: IResponseData = await getResponse.json()
+        const roleResponse: IResponseData = await getResponse.json()
 
 
-        let role  = <Role> roleResponse.data
+        const role  = <Role> roleResponse.data
        
         user.username = "testuser";
         user.firstName = "testFirstName";
         user.lastName = "testLastName";
         user.password = "testPassword";
-        user.createdAt = new Date();
-        user.updateAt = new Date();
+        user.email = 'pepito@pepito.es';
+        user.isActive = true;
+        //user.createdAt = new Date();
+        //user.updateAt = new Date();
         user.role = role
 
+       
         const postResponse = await fetch(userUrl,{
             method: 'POST',
             headers: {
@@ -55,6 +63,7 @@ describe('API REST Save an Delete  User', () => {
                 body:JSON.stringify(user)
         });
 
+    
 
         expect(await postResponse.status).to.be.equal(201);
 
@@ -63,8 +72,9 @@ describe('API REST Save an Delete  User', () => {
 
         let userDelete =  <User> dataResponse.data;
 
+        const templateUser = `${userUrl}/${userDelete.id}`;
 
-         const deleteResponse = await fetch(userUrl + '/' + userDelete.id, {
+         const deleteResponse = await fetch(templateUser, {
              method: 'DELETE',
          });
  
@@ -72,4 +82,3 @@ describe('API REST Save an Delete  User', () => {
 
     })
 })
-

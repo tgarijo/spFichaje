@@ -31,6 +31,9 @@ sudo docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=r8437nr -d mysq
 #Migration
 npm run typeorm migration:run
 
+#mocha
+mocha -r ts-node/register User.test.ts
+
 ## ver procesos node
 pidof node 
 

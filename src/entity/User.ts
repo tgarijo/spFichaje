@@ -25,8 +25,7 @@ export  class User extends Content {
     
     @Column({
         type: "varchar",
-        length: 25,
-        unique: true
+        length: 25
     })
     username: string;
 
@@ -56,7 +55,9 @@ export  class User extends Content {
         length: 50,
         nullable: true
     })
-    @IsEmail({}, { message: 'Incorrect email' })
+    @IsEmail({
+        unique: true
+        }, { message: 'Incorrect email' })
     @IsNotEmpty({ message: 'The email is required' })
     email: string;
 

@@ -1,21 +1,22 @@
-import { getManager, EntityManager, EntitySchema, Repository } from "typeorm";
+
 import  { Request, Response } from "express";
-import { Company } from "../entity/Company";
-import { CompanyService } from '../Service/CompanyService'
+
 import { responseData } from "../utils/responseData";
+import { Center } from "../entity/Center";
+import { CenterService } from "../Service/CenterService";
 // import { ICompany } from './ICompany';
 
-export class  CompanyController{
+export class CenterController{
 
 
     public async save(req: Request, res: Response) {
 
    
-        let company: Company = req.body;
+        let center: Center = req.body;
     
         try {
           console.log("save");
-          let result =  await new CompanyService(Company).save(company);
+          let result =  await new CenterService(Center).save(center);
           // 
           return res.status(201).json(responseData(result, null)).send();
         
@@ -30,7 +31,7 @@ export class  CompanyController{
         let id = req.params.id;
     
         try {
-            let result = new CompanyService(Company).delete(parseInt(id));
+            let result = new CenterService(Center).delete(parseInt(id));
             return res.status(201).json(responseData(result, null)).send();
         } catch (error) {
             return res.status(500).json(responseData(null, error)).send();
@@ -43,7 +44,7 @@ export class  CompanyController{
     
           try {
     
-              let result = new CompanyService(Company).update(parseInt(id),  req.body)
+              let result = new CenterService(Center).update(parseInt(id),  req.body)
               return res.status(201).json(responseData(result, null)).send();
               //return res.status(200).json(result);
     
@@ -57,8 +58,8 @@ export class  CompanyController{
            
         try {
             // role as typeof object
-            let company: Company = await  new CompanyService(Company).get();
-            return res.status(200).json(responseData(company, null)).send();
+            let center: Center = await  new CenterService(Center).get();
+            return res.status(200).json(responseData(center, null)).send();
     
         } catch (error) {
             return res.status(500).json(responseData(null, error)).send();
@@ -69,8 +70,8 @@ export class  CompanyController{
         let id = parseInt(req.params.id);
     
         try {
-            let company: Company = await new CompanyService(Company).getById(id);
-            return res.status(200).json(responseData(company, null)).send();
+            let center: Center = await new CenterService(Center).getById(id);
+            return res.status(200).json(responseData(center, null)).send();
     
         } catch (error) {
             //console.log("Error number " , error)
