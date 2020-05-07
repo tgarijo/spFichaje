@@ -1,4 +1,4 @@
-import { Entity,  Column,  ManyToOne, JoinColumn } from "typeorm";
+import { Entity,  Column,  ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Company } from "./Company";
 
 import { User } from "./User";
@@ -18,7 +18,9 @@ export class Center extends Content{
   @JoinColumn()
   company: Company;
   
-  @ManyToOne(type => User, user => user.center) // Apunta a @OneToMany
-  @JoinColumn()
-  user: User; 
+  @OneToMany(type => User, user => user.center) // apunta al many to Oner
+  user: User[];
+  // @ManyToOne(type => User, user => user.center) // Apunta a @OneToMany
+  // @JoinColumn()
+  // user: User; 
 }

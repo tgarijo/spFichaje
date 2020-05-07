@@ -75,5 +75,18 @@ export class UserController {
         return res.status(500).json(responseData(null, error.message)).send()
     }
   }
+
+  public async getAllData(req: Request, res: Response) {
+    const id: number = parseInt(req.params.id);
+
+    try {
+      const user : User = await new UserService(User).getAllDataUser(id);
+      return res.status(200).json(responseData(user, null)).send();
+    
+    } catch (error) {
+      return res.status(500).json(responseData(null, error.message)).send()
+    }
+  }
 }
+
   

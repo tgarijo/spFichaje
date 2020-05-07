@@ -16,4 +16,7 @@ router.route('/user/:id')
 .put(userController.update)
 .delete(userController.delete);
 
+router.route('/getalldata/:id')
+    .get(userController.getAllData);
+    
 export default router;

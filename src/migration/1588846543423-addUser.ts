@@ -1,18 +1,9 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
-import {  getManager } from "typeorm";
 import * as bcrypt from "bcryptjs";
-import { RoleService } from '../Service/RoleService';
-import { Role } from '../entity/Role';
-import { User } from "../entity/User";
-import { UserService } from "../Service/UserService";
-
-//npm run typeorm migration:run   
-//npm run typeorm migration:revert
-
-export class addUser1585399362483 implements MigrationInterface {
+export class addUser1588846543423 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
-        let password = bcrypt.hashSync('user_p', 8)
+        const  password = bcrypt.hashSync('user_p', 8)
 
         await queryRunner.query(`
             INSERT INTO user 
@@ -23,7 +14,8 @@ export class addUser1585399362483 implements MigrationInterface {
                     lastname,
                     email,
                     isActive,
-                    roleId
+                    roleId,
+                    centerId
                 ) VALUES
                 (
                     "tgarijo",
@@ -32,6 +24,7 @@ export class addUser1585399362483 implements MigrationInterface {
                     "Garijo",
                     "tgarijo@gmail.com",
                     true,
+                    1,
                     1
                 )
         `);
@@ -45,7 +38,8 @@ export class addUser1585399362483 implements MigrationInterface {
                     lastname,
                     email,
                     isActive,
-                    roleId
+                    roleId,
+                    centerId
                 ) VALUES
                 (
                     "jgarcia",
@@ -54,14 +48,13 @@ export class addUser1585399362483 implements MigrationInterface {
                     "Garcia",
                     "jgarcia@gmail.com",
                     false,
-                    1
+                    1,
+                    2
                 )
         `);
-
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query(`DELETE FROM user where username="tgarijo"`);
     }
 
 }

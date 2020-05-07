@@ -78,8 +78,14 @@ export  class User extends Content {
     @JoinColumn()
     role: Role;
 
-    @OneToMany(type => Center, center => center.user) // apunta al many to Oner
-    center: Center[];
+    // @OneToMany(type => Center, center => center.user) // apunta al many to Oner
+    // center: Center[];
+
+    
+    @ManyToOne(type => Center, center => center.user) // Apunta a @OneToMany
+    @JoinColumn()
+    center: Center;
+
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password,8);
