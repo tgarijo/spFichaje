@@ -1,12 +1,12 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, Column, ManyToOne, JoinColumn, BeforeUpdate } from "typeorm";
 import { Content } from "./Content";
 import { User } from "./User";
 import { Center } from "./Center";
-import { Role } from "./Role";
-
+import { validateOrReject } from "class-validator";
+import { Stopdescription } from "./StopDescription";
 
 @Entity()
-export class Tranfer extends Content {
+export class Transfer extends Content {
 
   @Column({
     type: "datetime"
@@ -18,6 +18,11 @@ export class Tranfer extends Content {
   })
   end: Date;
 
+  @BeforeUpdate()
+  async validate() {
+    await validateOrReject(this);
+  }
+  
   @ManyToOne(type => User, user => user) // Apunta a @OneToMany
   @JoinColumn()
   user: User;
@@ -26,9 +31,7 @@ export class Tranfer extends Content {
   @JoinColumn()
   center: Center;
 
-  // @OneToMany(type => User, user => user) // apunta al many to Oner
-  // user: User[];
-
-  // @OneToMany(type => Center, center => center) // apunta al many to Oner
-  // center: Center[];
+  @ManyToOne(type => Stopdescription, stopDescription => stopDescription) // Apunta a @OneToMany
+  @JoinColumn()
+  stopDescription: Stopdescription;
 }

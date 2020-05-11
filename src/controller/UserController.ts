@@ -9,11 +9,11 @@ export class UserController {
   public async save(req: Request, res: Response) {
 
    
-    let user: User = req.body;
+    const user: User = req.body;
 
     try {
       console.log("save");
-      let result =  await new UserService(User).save(user);
+      const result =  await new UserService(User).save(user);
       // 
       return res.status(201).json(responseData(result, null)).send();
     
@@ -25,10 +25,10 @@ export class UserController {
   }
 
   public async delete (req: Request, res: Response) {
-    let id = req.params.id;
+    const id = req.params.id;
 
     try {
-        let result = new UserService(User).delete(parseInt(id));
+        const result = new UserService(User).delete(parseInt(id));
         return res.status(201).json(responseData(result, null)).send();
     } catch (error) {
         return res.status(500).json(responseData(null, error)).send();
@@ -55,7 +55,7 @@ export class UserController {
        
     try {
         // role as typeof object
-        let role: User = await  new UserService(User).get();
+        const role: User = await  new UserService(User).get();
         return res.status(200).json(responseData(role, null)).send();
 
     } catch (error) {
@@ -64,10 +64,10 @@ export class UserController {
   }
 
   public async getById(req: Request, res:Response) {
-    let id = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
 
     try {
-        let role : User = await new UserService(User).getById(id);
+        const role : User = await new UserService(User).getById(id);
         return res.status(200).json(responseData(role, null)).send();
 
     } catch (error) {

@@ -11,11 +11,11 @@ export class  CompanyController{
     public async save(req: Request, res: Response) {
 
    
-        let company: Company = req.body;
+        const  company: Company = req.body;
     
         try {
           console.log("save");
-          let result =  await new CompanyService(Company).save(company);
+          const  result =  await new CompanyService(Company).save(company);
           // 
           return res.status(201).json(responseData(result, null)).send();
         

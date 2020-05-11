@@ -2,8 +2,6 @@
 import {
     Entity, 
     Column,
-    Unique,
-     OneToMany,
     ManyToOne,
     BeforeInsert,
     BeforeUpdate,
