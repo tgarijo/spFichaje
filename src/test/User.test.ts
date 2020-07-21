@@ -97,6 +97,25 @@ describe('User Test', () => {
         expect(response.status).to.be.equal(200);
     }).timeout(timeOutValue);
 
+    it('decrypt password  by id', async () => {
+        const userId = 1;
+
+        const templateUser = `${userUrl}/${userId}`
+        const response = await fetch(templateUser);
+       
+        const responseUser= await response.json()  as IResponseData
+    
+        const user: User =  responseUser.data as User;
+
+        let users =  new User();
+        users.password = 'user_p'
+
+        expect(users.checkIfUnencryptedPasswordIsValid(user.password)).to.be.equal(true)
+        // users.checkIfUnencryptedPasswordIsValid(user.password);
+
+        // expect(response.status).to.be.equal(200);
+    }).timeout(timeOutValue);
+
     it('Update data', async () => {
         const updateId = 1;
 
@@ -109,7 +128,7 @@ describe('User Test', () => {
     
         const user: User =  responseUser.data as User;
 
-        user.lastName = "Garijo"
+        user.password = "user_p"
 
         const putResponse = await fetch(templateUser,{
             method: 'PUT',
@@ -128,7 +147,7 @@ describe('User Test', () => {
 
     }).timeout(timeOutValue);
 
-    it.only('Get deep all data', async () => {
+    it('Get deep all data', async () => {
 
         const userId : number = 1;
         const templateUsrl = `${getAllDataUrl}/${userId}`;

@@ -6,6 +6,8 @@ import roleRouter from './role.routes';
 import userRouter from './user.routes.'
 import centerRouter from './center.routes'
 import stopDescriptionRouter from './stopDescription.routes'
+import authRouter from './authRouter';
+
 const router = Router();
 
 
@@ -25,6 +27,7 @@ export class indexRouter {
         this.app.use(userRouter);
         this.app.use(centerRouter);
         this.app.use(stopDescriptionRouter);
+        this.app.use(authRouter);
         
     }
 }

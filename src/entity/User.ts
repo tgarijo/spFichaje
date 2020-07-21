@@ -22,6 +22,7 @@ export  class User extends Content {
 
     
     @Column({
+        unique: true,
         type: "varchar",
         length: 25
     })
@@ -90,7 +91,10 @@ export  class User extends Content {
     }
 
     checkIfUnencryptedPasswordIsValid(unencryptedPassword:string){
-        return bcrypt.compareSync(unencryptedPassword, this.password);
+        const hash = bcrypt.hashSync(this.password,8)
+        const result = bcrypt.compareSync(unencryptedPassword, hash);
+        return result;
     }
+
 
 }
